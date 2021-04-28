@@ -10,18 +10,23 @@ import item.Hammer;
 import item.Medicine;
 import player.Player;
 
-public class Wood extends ObstacleBase{
+public class WoodenBox extends ObstacleBase{
 
 	//constructor
-	public Wood(int x,int y) {
-		super(x,y);
+	public WoodenBox(int[] coordinate) {
+		super(coordinate);
+		setValue(15);
 	}
 	
 	//Task 
 	//1.randomItem create item and define coordinate of item 
 	
 	public ItemBase randomItem() {
-		ItemBase[] allItem = {new Armor(this), new Boot(this), new Fire(this), new Hammer(this), new Medicine(this)};
+		ItemBase[] allItem = {new Armor(this.getCoordinate()), 
+							  new Boot(this.getCoordinate()), 
+							  new Fire(this.getCoordinate()), 
+							  new Hammer(this.getCoordinate()), 
+							  new Medicine(this.getCoordinate())};
 		Random random = new Random();
 		return allItem[random.nextInt(allItem.length)];
 	}

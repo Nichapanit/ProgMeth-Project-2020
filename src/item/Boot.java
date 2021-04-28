@@ -1,33 +1,29 @@
 package item;
 
 import base.CountdownTimer;
+import base.IncreaseAbilityPlayer;
 import base.ItemBase;
-import obstacle.Wood;
 import player.Player;
 
-public class Boot extends ItemBase implements CountdownTimer {
-	
+public class Boot extends ItemBase implements IncreaseAbilityPlayer,CountdownTimer {
 	private int cooldown;
-	private static final int SPEEDUP = 3; // ** what speed should be
+	private int speedUp; 
 	
 	//constructor
-	public Boot(Wood wood) {
-		super(wood);
+	public Boot(int[] coordinate) {
+		super(coordinate);
+		speedUp = 3;
 	}
 	
-	//Task 
-	//1.Player gets item and increase ability.
+	//Task
+	//1.item will increase speed
 	@Override
-	public boolean givenItem(Player player) {
-		if (player.getX() == this.getX() && player.getY() == this.getY()) {
-			player.setCurrentSpeed(player.getGeneralSpeed() + SPEEDUP);  
-			setCooldown(5);
-			return true;
-		}
-		return false;
+	public void increase(Player player) {
+		player.setCurrentSpeed(player.getGeneralSpeed() + speedUp);
+		setCooldown(5);
 	}
 	
-	//2.check if item expired and reset ability
+	//2. Check item expired
 	@Override
 	public boolean isTimeOut(Player player) {
 		if (this.cooldown == 0) {
@@ -41,6 +37,12 @@ public class Boot extends ItemBase implements CountdownTimer {
 		
 	}
 	
+	//3.
+	@Override
+	public void action(Player player) {
+		increase(player);
+	}
+
 	//getter-setter
 	public int getCooldown() {
 		return cooldown;
@@ -48,6 +50,12 @@ public class Boot extends ItemBase implements CountdownTimer {
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
+	public int getSpeedUp() {
+		return speedUp;
+	}
+
+	
+
 	
 
 }

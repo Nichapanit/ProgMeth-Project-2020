@@ -23,21 +23,13 @@ public class Bag {
 	public ArrayList<ItemBase> getItemList(){
 		return itemList;
 	}
+	
+	//Task
+	//1. get item from index
 	public ItemBase getItem(int index) {
 		return itemList.get(index);
 	}
 	
-	//Task
-	//1.remove item
-	public void removeItem() {
-		
-	}
-	//2. add item
-	public void addItem(ItemBase item) {
-		if(item instanceof Destroyable) {
-			itemList.add(item);
-		}
-	}
 	
 
 }

@@ -2,11 +2,13 @@ package player;
 
 import java.util.ArrayList;
 
+import base.Destroyable;
+import base.Exist;
+import base.IncreaseAbilityPlayer;
 import base.ItemBase;
+import logic.Direction;
 
-public class Player {
-	private int x;
-	private int y;
+public class Player extends Exist {
 	private String name;
 	private String character;
 	private int score;
@@ -16,28 +18,19 @@ public class Player {
 	private final int GENERAL_SPEED = 20;
 	private int currentSpeed;
 	private Bag bag;
+	private Direction direction;
 	
 	//constructor
-	public Player(String name,String character) {
+	public Player(int[] coordinate,String name,String character) {
+		super(coordinate);
 		setName(name);
 		setCurrentLifePoint(120);
 		setScore(0);
 		bag = new Bag(name);
+		setDirection(Direction.NONE);
 	}
 	
 	//getter-setter
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 	public String getName() {
 		return this.name;
 	}
@@ -79,6 +72,9 @@ public class Player {
 		return this.currentLifePoint;
 	}
 	public void setCurrentLifePoint(int currentLifePoint) {
+		if (currentLifePoint < 0) {
+			this.currentLifePoint = 0;
+		}
 		this.currentLifePoint = currentLifePoint;
 	}
 	public int getGeneralSpeed() {
@@ -93,12 +89,39 @@ public class Player {
 	public Bag getBag() {
 		return bag;
 	}
+	public Direction getDirection() {
+		return direction;
+	}
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
 	
 	//Task
-	//1.heal ** should use getter setter MAX_LIFEPOINT
-	public void healPlayer(int heal) {
-		int totalHP = getCurrentLifePoint() + heal;
-		setCurrentLifePoint(totalHP>getCurrentLifePoint()?MAX_LIFEPOINT:totalHP); 
+	//1.player use item
+	public void useItem() {
+		bag.getItem(0).action(this);
+		bag.getItemList().remove(0);
+		
+	}
+	
+	//2.player get item
+	public boolean getItem(ItemBase item) {
+		if(item instanceof IncreaseAbilityPlayer) {
+			item.action(this);
+			return true;
+		}
+		if(item instanceof Destroyable) {
+			bag.getItemList().add(item);
+			return true;
+		}
+		return false;
+	}
+	
+	//3. move
+	
+	//4. Bomb 
+	public Bomb bomb() {
+		return new Bomb(getCoordinate());
 	}
 	
 }

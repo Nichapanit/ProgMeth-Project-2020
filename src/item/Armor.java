@@ -2,43 +2,55 @@ package item;
 
 import base.CountdownTimer;
 import base.Destroyable;
+import base.IncreaseAbilityPlayer;
 import base.ItemBase;
-import obstacle.Wood;
+import obstacle.WoodenBox;
 import player.Player;
 
-public class Armor extends ItemBase implements CountdownTimer{
-	private static final int DEFENSE = 15;
+public class Armor extends ItemBase implements IncreaseAbilityPlayer,CountdownTimer{
+	private int cooldown;
+	private int defense;
 	
 	//constructor
-	public Armor(Wood wood) {
-		super(wood);
+	public Armor(int[] coordinate) {
+		super(coordinate);
+		defense = 10;
 	}
 	
 	//Task
-	//1.Player gets item and increase ability. 
+	//1.item will increase defense. 
 	@Override
-	public boolean givenItem(Player player) {
-		if (player.getX() == this.getX() && player.getY() == this.getY()) {
-			player.setDefense(DEFENSE);
-			return true;
-		}
-		return false;
+	public void increase(Player player) {
+		player.setDefense(defense);
 	}
-	//2.check armor defense from destroyable
-	public void defense(Destroyable d,Player player) {
-		if(d instanceof Hammer) {
-			
-			return false;
-		}
-		else{
+	
+	//2. Check item expired
+	@Override
+	public boolean isTimeOut(Player player) {
+		if (this.cooldown == 0) {
 			player.setDefense(0);
 			return true;
 		}
+		else {
+			this.cooldown = cooldown  - 1;
+			return false;
+		}
+	}
+	
+	//3.
+	@Override
+	public void action(Player player) {
+		increase(player);
+			
+	}
+	
+	// getter-setter
+	public int getCooldown() {
+		return cooldown;
 	}
 
-	@Override
-	public boolean isTimeOut(Player player) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setCooldown(int cooldown) {
+		this.cooldown = cooldown;
 	}
+
 }	

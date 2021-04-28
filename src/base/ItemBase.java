@@ -1,32 +1,14 @@
 package base;
 
-import obstacle.Wood;
 import player.Player;
 
-abstract public class ItemBase {
-	protected int x;
-	protected int y;
+abstract public class ItemBase extends Exist {
 	
 	//constructor
-	public ItemBase(Wood wood) {
-		setX(wood.getX());
-		setY(wood.getY());
+	public ItemBase(int[] coordinate) {
+		super(coordinate);
 	}
 	
-	//abstract method 
-	abstract public boolean givenItem(Player player);
+	abstract public void action(Player player);
 	
-	//getter-setter
-	public int getX() {
-		return this.x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return this.y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
 }

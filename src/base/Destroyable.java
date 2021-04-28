@@ -1,8 +1,9 @@
 package base;
 
+import java.util.ArrayList;
 import player.Player;
 
 public interface Destroyable {
-	public abstract boolean destroy(ObstacleBase o,Player player); // check item can destroy this obstacle
-	public abstract int setPoint(ObstacleBase o);
+	boolean destroy(ObstacleBase o); // Check item destroy obstacle
+	void setPoint(ObstacleBase o, Player player); //After destroy player will be given point and add score
 }
