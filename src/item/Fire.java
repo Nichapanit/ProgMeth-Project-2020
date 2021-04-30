@@ -17,7 +17,7 @@ import player.Player;
 public class Fire extends ItemBase implements Destroyable,Attackable,CountdownTimer {
 	private final int DESTROY = 13;
 	private int cooldown;
-	private ArrayList areaItem;
+	private ArrayList<int[]> areaItem;
 	
 	//constructor
 	public Fire(int[] coordinate) {
@@ -34,6 +34,9 @@ public class Fire extends ItemBase implements Destroyable,Attackable,CountdownTi
 		int[] coordinate2 = {x,y};
 		Direction direction = player.getDirection(); 
 
+		//{1,2}
+		areaItem = {{2,2},{3,2}}
+		areaItem = {co1,co2}
 		switch (direction) {
 		case LEFT:
 			coordinate1[0] -= 1;
@@ -96,8 +99,26 @@ public class Fire extends ItemBase implements Destroyable,Attackable,CountdownTi
 	//6. action
 	@Override
 	public void action(Player player) {
-		// TODO Auto-generated method stub
-		
+		while (!isTimeOut(player)) {
+			for (int[] co : areaItem) {  //areaItem = {{2,2},{3,2}} 
+			     // {2,2} i = 0
+				// get obstacle from gameMap >> Obstacle o =
+				if (getfrommap instanceof Obstacle) {
+					if (destroy(o)) {
+						setPoint(o, player);
+						if (o instanceof WoodenBox) {
+							// remove obstacle
+							// Gamemap.add(o.randomItem());
+						}
+					}
+					if (player.getCoordinate().equals(co)) {
+						attack(player);
+					}
+				}
+
+			}
+		}
+
 	}
 	
 	//getter-setter

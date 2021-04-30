@@ -7,6 +7,7 @@ import base.Exist;
 import base.IncreaseAbilityPlayer;
 import base.ItemBase;
 import logic.Direction;
+import logic.GameController;
 
 public class Player extends Exist {
 	private String name;
@@ -101,7 +102,6 @@ public class Player extends Exist {
 	public void useItem() {
 		bag.getItem(0).action(this);
 		bag.getItemList().remove(0);
-		
 	}
 	
 	//2.player get item
@@ -118,10 +118,43 @@ public class Player extends Exist {
 	}
 	
 	//3. move
+	public boolean move(Direction dir) {
+		int x = this.getCoordinate()[0];
+		int y = this.getCoordinate()[1];
+		int[] co = {x,y};
+		
+		direction = dir; //Update move position
+
+		switch(dir) {
+		case LEFT:
+			co[0] -= 1;
+			break;
+		case UP:
+			co[1] += 1;
+			break;
+		case RIGHT:
+			co[0] += 1;
+			break;
+		case DOWN:
+			co[1] -= 1;
+			break;
+		default:
+			break;
+		}
+		
+		if(GameController.getCurrentMap().isMovePossible(co[0], co[1],this)) {
+			GameController.getCurrentMap().removeEntity(x,y);
+			GameController.getCurrentMap().addEntity(this, targetx, targety);
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 	//4. Bomb 
-	public Bomb bomb() {
-		return new Bomb(getCoordinate());
+	public void bomb() {
+		Bomb bomb = new Bomb(getCoordinate());
+		bomb.action(this);
 	}
 	
 }

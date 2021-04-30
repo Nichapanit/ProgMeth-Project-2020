@@ -22,17 +22,11 @@ public class Medicine extends ItemBase implements IncreaseAbilityPlayer {
 	//Task 
 	//1.item will increase currentLifepoint
 	@Override
-	public void increase(Player player) {
+	public void action(Player player) {
 		int total = player.getCurrentLifePoint() + heal;
 		player.setCurrentLifePoint(total < player.getMaxLifePoint() ? total : player.getMaxLifePoint());
 	}
-
-	//2. action
-	@Override
-	public void action(Player player) {
-		increase(player);
-	}
-
+	
 	 
 	
 	

@@ -18,7 +18,7 @@ public class Boot extends ItemBase implements IncreaseAbilityPlayer,CountdownTim
 	//Task
 	//1.item will increase speed
 	@Override
-	public void increase(Player player) {
+	public void action(Player player) {
 		player.setCurrentSpeed(player.getGeneralSpeed() + speedUp);
 		setCooldown(5);
 	}
@@ -35,12 +35,6 @@ public class Boot extends ItemBase implements IncreaseAbilityPlayer,CountdownTim
 			return false;
 		}
 		
-	}
-	
-	//3.
-	@Override
-	public void action(Player player) {
-		increase(player);
 	}
 
 	//getter-setter

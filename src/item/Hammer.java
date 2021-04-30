@@ -3,6 +3,7 @@ package item;
 import java.util.ArrayList;
 
 import base.Destroyable;
+import base.Exist;
 import base.ItemBase;
 import base.ObstacleBase;
 import logic.Direction;
@@ -24,7 +25,7 @@ public class Hammer extends ItemBase implements Destroyable{
 	public void setAreaItem(Player player) {
 		int x = player.getCoordinate()[0];
 		int y = player.getCoordinate()[1];
-		int[] coordinate = {x,y};	
+		int[] coordinate = {x,y};
 		Direction direction = player.getDirection(); 
 
 		switch (direction) {
@@ -65,8 +66,15 @@ public class Hammer extends ItemBase implements Destroyable{
 	//4. action
 	@Override
 	public void action(Player player) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0 ; i < this.getAreaItem().size() ; i++) {
+			int[] co = (int[]) this.getAreaItem().get(i);
+			// get obstacle from gameMap >> Obstacle o = 
+			if (getfrommap instanceof Obstacle) {
+				if (destroy(o)) {
+					setPoint(o,player);
+				}
+			}
+		}		
 	}
 	
 	//getter
@@ -76,8 +84,6 @@ public class Hammer extends ItemBase implements Destroyable{
 	public ArrayList getAreaItem() {
 		return this.areaItem;
 	}
-
-	
 
 	
 

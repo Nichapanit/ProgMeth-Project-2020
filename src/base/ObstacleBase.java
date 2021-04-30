@@ -1,6 +1,6 @@
 package base;
 
-public class ObstacleBase extends Exist {
+public abstract class ObstacleBase extends Exist {
 	protected int value;
 	
 	//constructor

@@ -3,7 +3,7 @@ package base;
 import java.util.ArrayList;
 
 abstract public class Exist {
-	protected int[] coordinate = new int[2];
+	protected int[] coordinate = {0,0};
 	
 	//constructor
 	public Exist(int[] coordinate) {
@@ -15,7 +15,8 @@ abstract public class Exist {
 		return coordinate;
 	}
 	public void setCoordinate(int[] coordinate) {
-		this.coordinate = coordinate;
+		this.coordinate[0] = coordinate[0];
+		this.coordinate[1] = coordinate[1];
 	}
 	
 	//Task

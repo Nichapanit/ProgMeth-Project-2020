@@ -15,13 +15,15 @@ public class Armor extends ItemBase implements IncreaseAbilityPlayer,CountdownTi
 	public Armor(int[] coordinate) {
 		super(coordinate);
 		defense = 10;
+		setCooldown(10);
 	}
 	
 	//Task
 	//1.item will increase defense. 
 	@Override
-	public void increase(Player player) {
+	public void action(Player player) {
 		player.setDefense(defense);
+			
 	}
 	
 	//2. Check item expired
@@ -35,13 +37,6 @@ public class Armor extends ItemBase implements IncreaseAbilityPlayer,CountdownTi
 			this.cooldown = cooldown  - 1;
 			return false;
 		}
-	}
-	
-	//3.
-	@Override
-	public void action(Player player) {
-		increase(player);
-			
 	}
 	
 	// getter-setter
