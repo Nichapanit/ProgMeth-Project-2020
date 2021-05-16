@@ -11,24 +11,30 @@ import item.Medicine;
 import player.Player;
 
 public class WoodenBox extends ObstacleBase{
-
 	//constructor
-	public WoodenBox(int[] coordinate) {
-		super(coordinate);
-		setValue(15);
-	}
+		public WoodenBox(int x,int y) {
+			super(x,y);
+			setValue(15);
+		}
+		
+		//Task 
+		//1.randomItem create item and define coordinate of item 
+		
+		public ItemBase randomItem() {
+			ItemBase[] allItem = {new Armor(this.x,this.y), 
+								  new Boot(this.x,this.y), 
+								  new Fire(this.x,this.y), 
+								  new Hammer(this.x,this.y), 
+								  new Medicine(this.x,this.y)};
+			Random random = new Random();
+			return allItem[random.nextInt(allItem.length)];
+		}
+
+		@Override
+		public int getSprite() {
+			// TODO Auto-generated method stub
+			return 8;
+		}
 	
-	//Task 
-	//1.randomItem create item and define coordinate of item 
-	
-	public ItemBase randomItem() {
-		ItemBase[] allItem = {new Armor(this.getCoordinate()), 
-							  new Boot(this.getCoordinate()), 
-							  new Fire(this.getCoordinate()), 
-							  new Hammer(this.getCoordinate()), 
-							  new Medicine(this.getCoordinate())};
-		Random random = new Random();
-		return allItem[random.nextInt(allItem.length)];
-	}
-	
+
 }

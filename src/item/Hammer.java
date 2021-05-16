@@ -3,7 +3,6 @@ package item;
 import java.util.ArrayList;
 
 import base.Destroyable;
-import base.Exist;
 import base.ItemBase;
 import base.ObstacleBase;
 import logic.Direction;
@@ -15,17 +14,17 @@ public class Hammer extends ItemBase implements Destroyable{
 	private final int DESTROY = 15;
 	private ArrayList areaItem;
 	//constructor
-	public Hammer(int[] coordinate) {
-		super(coordinate);
+	public Hammer(int x, int y) {
+		super(x,y);
 		areaItem = new ArrayList<>();
 	}
 
 	//Task
 	//1. item has area when it works.
 	public void setAreaItem(Player player) {
-		int x = player.getCoordinate()[0];
-		int y = player.getCoordinate()[1];
-		int[] coordinate = {x,y};
+		int x = player.getX();
+		int y = player.getY();
+		int[] coordinate = {x,y};	
 		Direction direction = player.getDirection(); 
 
 		switch (direction) {
@@ -66,15 +65,8 @@ public class Hammer extends ItemBase implements Destroyable{
 	//4. action
 	@Override
 	public void action(Player player) {
-		for (int i = 0 ; i < this.getAreaItem().size() ; i++) {
-			int[] co = (int[]) this.getAreaItem().get(i);
-			// get obstacle from gameMap >> Obstacle o = 
-			if (getfrommap instanceof Obstacle) {
-				if (destroy(o)) {
-					setPoint(o,player);
-				}
-			}
-		}		
+		// TODO Auto-generated method stub
+		
 	}
 	
 	//getter
@@ -85,8 +77,17 @@ public class Hammer extends ItemBase implements Destroyable{
 		return this.areaItem;
 	}
 
-	
+	@Override
+	public boolean isTimeOut(Player player) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
-	
+	@Override
+	public int getSprite() {
+		// TODO Auto-generated method stub
+		return 5;
+	}
+
 
 }

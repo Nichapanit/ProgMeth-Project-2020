@@ -5,6 +5,7 @@ import base.Destroyable;
 import base.ItemBase;
 
 public class Bag {
+	
 	private String owner;
 	private ArrayList<ItemBase> itemList;
 	
@@ -29,7 +30,6 @@ public class Bag {
 	public ItemBase getItem(int index) {
 		return itemList.get(index);
 	}
-	
 	
 
 }

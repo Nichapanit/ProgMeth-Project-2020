@@ -1,14 +1,14 @@
 package base;
-
 import player.Player;
 
-abstract public class ItemBase extends Exist {
-	
+public abstract class ItemBase extends Exist {
 	//constructor
-	public ItemBase(int[] coordinate) {
-		super(coordinate);
+	public ItemBase(int x,int y) {
+		super(x,y);
 	}
 	
 	abstract public void action(Player player);
-	
+	public abstract boolean isTimeOut(Player player);
+	abstract public int getSprite();
+
 }

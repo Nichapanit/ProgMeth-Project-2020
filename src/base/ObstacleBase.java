@@ -1,11 +1,13 @@
 package base;
 
-public abstract class ObstacleBase extends Exist {
+import player.Player;
+
+public abstract class ObstacleBase extends Exist{
 	protected int value;
 	
 	//constructor
-	public ObstacleBase(int[] coordinate) {
-		super(coordinate);
+	public ObstacleBase(int x, int y) {
+		super(x,y);
 	}
 	//getter
 	public int getValue() {
@@ -19,4 +21,8 @@ public abstract class ObstacleBase extends Exist {
 			this.value = value;
 		}
 	}
+
+
+	
+
 }

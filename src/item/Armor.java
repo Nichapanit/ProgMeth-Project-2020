@@ -7,23 +7,21 @@ import base.ItemBase;
 import obstacle.WoodenBox;
 import player.Player;
 
-public class Armor extends ItemBase implements IncreaseAbilityPlayer,CountdownTimer{
+public class Armor extends ItemBase implements IncreaseAbilityPlayer{
 	private int cooldown;
 	private int defense;
 	
 	//constructor
-	public Armor(int[] coordinate) {
-		super(coordinate);
+	public Armor(int x,int y) {
+		super(x,y);
 		defense = 10;
-		setCooldown(10);
 	}
 	
 	//Task
 	//1.item will increase defense. 
 	@Override
-	public void action(Player player) {
+	public void increase(Player player) {
 		player.setDefense(defense);
-			
 	}
 	
 	//2. Check item expired
@@ -39,6 +37,13 @@ public class Armor extends ItemBase implements IncreaseAbilityPlayer,CountdownTi
 		}
 	}
 	
+	//3.
+	@Override
+	public void action(Player player) {
+		increase(player);
+			
+	}
+	
 	// getter-setter
 	public int getCooldown() {
 		return cooldown;
@@ -48,4 +53,10 @@ public class Armor extends ItemBase implements IncreaseAbilityPlayer,CountdownTi
 		this.cooldown = cooldown;
 	}
 
-}	
+	@Override
+	public int getSprite() {
+		// TODO Auto-generated method stub
+		return 4;
+	}
+
+}

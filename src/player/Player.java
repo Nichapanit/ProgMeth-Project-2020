@@ -6,12 +6,15 @@ import base.Destroyable;
 import base.Exist;
 import base.IncreaseAbilityPlayer;
 import base.ItemBase;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import logic.Direction;
-import logic.GameController;
+import model.CHARACTER;
+import view.GameController;
 
-public class Player extends Exist {
+public class Player extends Exist{
 	private String name;
-	private String character;
+	private CHARACTER character;
 	private int score;
 	private int defense;
 	private final int MAX_LIFEPOINT = 120; 
@@ -21,14 +24,36 @@ public class Player extends Exist {
 	private Bag bag;
 	private Direction direction;
 	
+	//---------------------graphic------------------------------------
+	private int offsetX;
+	private int offsetY;
+
+	private int translateX;
+	private int translateY;
+	private static final int WIDTH = 64;
+	private static final int HEIGHT = 64;
+
+	public static final int FRONT = 0;
+	public static final int RIGHT = 1;
+	public static final int LEFT = 2;
+	public static final int BACK = 3;
+	
+	private WritableImage img;
+	private Image image;
+	
 	//constructor
-	public Player(int[] coordinate,String name,String character) {
-		super(coordinate);
-		setName(name);
+	public Player(int x, int y,String name,CHARACTER character) {
+		super(x,y);
+		setCharacter(character);
 		setCurrentLifePoint(120);
 		setScore(0);
 		bag = new Bag(name);
 		setDirection(Direction.NONE);
+	//-------------------------------------player image-------------------------------//	
+		this.offsetX = 0;
+		this.offsetY = 0;
+		image = new Image(character.getCharacterUrl());
+		img = new WritableImage(image.getPixelReader(), offsetX, offsetY, 64, 64);
 	}
 	
 	//getter-setter
@@ -43,10 +68,10 @@ public class Player extends Exist {
 			this.name = name;
 		}
 	}
-	public String getCharacter() {
+	public CHARACTER getCharacter() {
 		return this.character;
 	}
-	public void setCharacter(String character) {
+	public void setCharacter(CHARACTER character) {
 		this.character = character;
 	}
 	public int getScore() {
@@ -102,6 +127,7 @@ public class Player extends Exist {
 	public void useItem() {
 		bag.getItem(0).action(this);
 		bag.getItemList().remove(0);
+		
 	}
 	
 	//2.player get item
@@ -118,43 +144,53 @@ public class Player extends Exist {
 	}
 	
 	//3. move
-	public boolean move(Direction dir) {
-		int x = this.getCoordinate()[0];
-		int y = this.getCoordinate()[1];
-		int[] co = {x,y};
-		
-		direction = dir; //Update move position
+	 public boolean move(Direction dir) {
+		  int targetX = this.x;
+		  int targetY = this.y;
 
-		switch(dir) {
-		case LEFT:
-			co[0] -= 1;
-			break;
-		case UP:
-			co[1] += 1;
-			break;
-		case RIGHT:
-			co[0] += 1;
-			break;
-		case DOWN:
-			co[1] -= 1;
-			break;
-		default:
-			break;
-		}
-		
-		if(GameController.getCurrentMap().isMovePossible(co[0], co[1],this)) {
-			GameController.getCurrentMap().removeEntity(x,y);
-			GameController.getCurrentMap().addEntity(this, targetx, targety);
-			return true;
-		}else {
-			return false;
-		}
+		  direction = dir; // Update move position
+
+		  switch (dir) {
+		  case LEFT:
+		   targetX -= 1;
+		   break;
+		  case UP:
+		   targetY -= 1;
+		   break;
+		  case RIGHT:
+		   targetX += 1;
+		   break;
+		  case DOWN:
+		   targetY += 1;
+		   break;
+		  default:
+		   break;
+		  }
+		  if(GameController.getCurrentMap().isMovePossible(targetX, targetY,this)) {
+		   if(GameController.getCurrentMap().getEntity(targetX, targetY) instanceof ItemBase) {
+		    GameController.getCurrentMap().removeEntity(targetX, targetY);
+		   }
+		   GameController.getCurrentMap().removeEntity(this.x,this.y);
+		   GameController.getCurrentMap().addEntity(this, targetX, targetY);
+		   return true;
+		  }else {
+		   return false;
+		  }
+		 }
+	
+	public WritableImage getWritableImage(int index) {
+		return new WritableImage(image.getPixelReader(), offsetX, index*64, 64, 64);
 	}
 	
 	//4. Bomb 
-	public void bomb() {
-		Bomb bomb = new Bomb(getCoordinate());
-		bomb.action(this);
+	public Bomb bomb() {
+		return new Bomb(x,y);
 	}
-	
+
+	@Override
+	public int getSprite() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
